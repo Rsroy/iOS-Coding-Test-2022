@@ -7,11 +7,10 @@
 
 import Foundation
 
-struct BookElement: Codable {
-    let name, isbn: String
+struct Book: Codable {
+    let name: String
+    let isbn: String
     let authors: [String]
     let numberOfPages: Int
     let publisher, country, mediaType, released: String
 }
-
-typealias Book = [BookElement]
