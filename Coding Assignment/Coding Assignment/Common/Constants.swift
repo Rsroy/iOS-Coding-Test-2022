@@ -23,8 +23,18 @@ struct Constants {
     static let itemId_houses = "2"
 }
 
-enum Categories: String, Codable {
+enum Categories: String {
     case Books = "books"
     case Characters = "characters"
     case Houses = "houses"
+}
+
+enum KingdomFlags: String {
+    case The_North = "https://bit.ly/2Gcq0r4"
+    case The_Vale = "https://bit.ly/34FAvws"
+    case The_Riverlands = "https://bit.ly/3kJrIiP"
+    case The_Westerlands = "https://bit.ly/2TAzjnO"
+    case The_Reach = "https://bit.ly/2HSCW5N"
+    case Dorne = "https://bit.ly/2HOcavT"
+    case The_Stormlands = "https://bit.ly/34F2sEC"
 }

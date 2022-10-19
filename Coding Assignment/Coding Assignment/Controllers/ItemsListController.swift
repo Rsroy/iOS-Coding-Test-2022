@@ -145,23 +145,27 @@ extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
             housesInfoString.append("Title - ")
             housesInfoString.append(housesDataModel?[indexPath.row].title ?? "")
             housesInfoString.append("\n")
-            
+
+            // Loading kingdom flags ...
             switch housesDataModel?[indexPath.row].region ?? "" {
             case "The North":
-                cell.itemLogo.download(from: "https://bit.ly/2Gcq0r4")
+                cell.itemLogo.download(from: KingdomFlags.The_North.rawValue)
             case "The Vale":
-                cell.itemLogo.download(from: "https://bit.ly/34FAvws")
-            case "The Riverlands OR Iron Islands":
-                cell.itemLogo.download(from: "https://bit.ly/3kJrIiP")
+                cell.itemLogo.download(from: KingdomFlags.The_Vale.rawValue)
+            case "The Riverlands":
+                cell.itemLogo.download(from: KingdomFlags.The_Riverlands.rawValue)
+            case "Iron Islands":
+                cell.itemLogo.download(from: KingdomFlags.The_Riverlands.rawValue)
             case "The Westerlands":
-                cell.itemLogo.download(from: "https://bit.ly/2TAzjnO")
+                cell.itemLogo.download(from: KingdomFlags.The_Westerlands.rawValue)
             case "The Reach":
-                cell.itemLogo.download(from: "https://bit.ly/2HSCW5N")
+                cell.itemLogo.download(from: KingdomFlags.The_Reach.rawValue)
             case "Dorne":
-                cell.itemLogo.download(from: "https://bit.ly/2HOcavT")
+                cell.itemLogo.download(from: KingdomFlags.Dorne.rawValue)
             case "The Stormlands":
-                cell.itemLogo.download(from: "https://bit.ly/34F2sEC")
+                cell.itemLogo.download(from: KingdomFlags.The_Stormlands.rawValue)
             default:
+                cell.itemLogo.image = nil
                 break
             }
 
