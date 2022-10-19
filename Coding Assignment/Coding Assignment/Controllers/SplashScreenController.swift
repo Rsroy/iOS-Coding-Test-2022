@@ -11,6 +11,7 @@ import CoreData
 class SplashScreenController: UIViewController {
     fileprivate var isCategoriesLoaded = "false"
     let userDefaults = UserDefaults.standard
+    private let httpUtility = HttpUtility()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class SplashScreenController: UIViewController {
         categoriesArray = userDefaults.stringArray(forKey: Constants.categories_data_key) ?? []
         // to make the UX smooth
         do {
-            sleep(2)
+            sleep(1)
         }
         let categoriesView = self.storyboard?.instantiateViewController(withIdentifier: "CategoriesController") as! CategoriesController
         categoriesView.categoriesArray = categoriesArray
@@ -38,28 +39,9 @@ class SplashScreenController: UIViewController {
     
     fileprivate func loadCategories() {
         let url = URL(string: API.categoriesUrl)!
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let response = response {
-                print(response)
-                if let data = data, let body = String(data: data, encoding: .utf8) {
-                    let jsonData = body.data(using: .utf8)!
-                    let decoder = JSONDecoder()
-                    print(body)
-                    do {
-                        let structModelData = try decoder.decode([CategoriesModel].self, from: jsonData)
-                        self.savaData(data: structModelData)
-                        
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-            } else {
-                print(error ?? "API Error")
-            }
+        httpUtility.getApiData(requestUrl: url, requestType: [CategoriesModel].self) { result in
+            self.savaData(data: result)
         }
-        
-        task.resume()
     }
     
     fileprivate func savaData(data: [CategoriesModel]) {

@@ -36,11 +36,11 @@ class ItemsListController: UIViewController {
 extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch item.lowercased() {
-        case "books":
+        case Categories.Books.rawValue:
             return booksDataModel?.count ?? 0
-        case "characters":
+        case Categories.Characters.rawValue:
             return characterDataModel?.count ?? 0
-        case "houses":
+        case Categories.Houses.rawValue:
             return housesDataModel?.count ?? 0
         default:
             break
@@ -51,19 +51,21 @@ extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch item.lowercased() {
-        case "books":
+        case Categories.Books.rawValue:
             return prepareBooksCell(for: indexPath)
-        case "characters":
+        case Categories.Characters.rawValue:
             return prepareCharacterCell(for: indexPath)
-        case "houses":
+        case Categories.Houses.rawValue:
             return prepareHousesCell(for: indexPath)
         default:
             break
         }
-        
         return UITableViewCell()
     }
     
+    /// Function to prepare the tableview cells with json data
+    /// - Parameter indexPath: indexpath
+    /// - Returns: Items tableview cell object
     fileprivate func prepareBooksCell(for indexPath: IndexPath) -> ItemsTableViewCell {
         if let cell = self.itemsTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? ItemsTableViewCell {
             var bookInfoString = ""
@@ -96,7 +98,6 @@ extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
             cell.itemLogoWidth.constant = 1
             return cell
         }
-        
         return ItemsTableViewCell()
     }
     
@@ -128,7 +129,6 @@ extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
             cell.itemLogoWidth.constant = 1
             return cell
         }
-        
         return ItemsTableViewCell()
     }
     
@@ -153,7 +153,7 @@ extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
                 cell.itemLogo.download(from: "https://bit.ly/34FAvws")
             case "The Riverlands OR Iron Islands":
                 cell.itemLogo.download(from: "https://bit.ly/3kJrIiP")
-            case "TheWesterlands":
+            case "The Westerlands":
                 cell.itemLogo.download(from: "https://bit.ly/2TAzjnO")
             case "The Reach":
                 cell.itemLogo.download(from: "https://bit.ly/2HSCW5N")
@@ -171,12 +171,12 @@ extension ItemsListController: UITableViewDelegate, UITableViewDataSource {
             cell.itemLogoWidth.constant = 124
             return cell
         }
-        
         return ItemsTableViewCell()
     }
     
 }
 
+// Mark: - UIImage view extention for smooth image download..
 extension UIImageView {
     func download(from url: URL) {
         contentMode = .scaleAspectFit
@@ -190,6 +190,7 @@ extension UIImageView {
             }
         }.resume()
     }
+
     func download(from link: String) {
         guard let url = URL(string: link) else { return }
         download(from: url)

@@ -9,7 +9,6 @@ import UIKit
 
 class ItemsTableViewCell: UITableViewCell {
     @IBOutlet weak var itemDescription: UILabel!
-    
     @IBOutlet weak var itemLogo: UIImageView!
     @IBOutlet weak var itemLogoWidth: NSLayoutConstraint!
     

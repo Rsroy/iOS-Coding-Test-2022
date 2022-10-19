@@ -22,3 +22,9 @@ struct Constants {
     static let itemId_characters = "3"
     static let itemId_houses = "2"
 }
+
+enum Categories: String, Codable {
+    case Books = "books"
+    case Characters = "characters"
+    case Houses = "houses"
+}

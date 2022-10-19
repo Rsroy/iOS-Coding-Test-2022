@@ -10,12 +10,14 @@ import CoreData
 
 class CategoriesController: UIViewController {
     @IBOutlet weak var categoriesTableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     var dataModel = [CategoriesModel]()
     var categoriesArray = [String]()
     let cellReuseIdentifier = Constants.categories_tableview_cell_identifier
     var isFirstTimeLoad = true
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+    private let httpUtility = HttpUtility()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true)
@@ -34,14 +36,14 @@ class CategoriesController: UIViewController {
             // Sorting the category names..
             categoriesArray = categoriesArray.sorted(by: { $1 > $0 })
         }
-
+        
         // Reload TableView..
         categoriesTableView.reloadData()
     }
 }
 
 extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
-    
+    // Tableview delegate and datasource methods..
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categoriesArray.count
     }
@@ -66,43 +68,31 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     func loadItemsData(for item: String) {
         let itemUrlString = getItemsUrl(for: item)
         let url = URL(string: itemUrlString)!
-        let request = URLRequest(url: url)
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let response = response {
-                print(response)
-                if let data = data, let body = String(data: data, encoding: .utf8) {
-                    let jsonData = body.data(using: .utf8)!
-                    let decoder = JSONDecoder()
-                    print(body)
-                    do {
-                        
-                        if item.lowercased() == "books" {
-                            let structModelData = try decoder.decode([Book].self, from: jsonData)
-                            self.showBooksScreen(for: structModelData, item: item)
-                        } else if item.lowercased() == "houses" {
-                            let structModelData = try decoder.decode([House].self, from: jsonData)
-                            self.showHouseScreen(for: structModelData, item: item)
-                        } else if item.lowercased() == "characters" {
-                            let structModelData = try decoder.decode([Character].self, from: jsonData)
-                            self.showCharacterScreen(for: structModelData, item: item)
-                        }
-                        
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-            } else {
-                print(error ?? "API Error")
-            }
-        }
-        
-        task.resume()
-    }
     
+        if item.lowercased() == Categories.Books.rawValue {
+            // Get data for Books...
+            httpUtility.getApiData(requestUrl: url, requestType: [Book].self) { result in
+                self.showBooksScreen(for: result, item: item)
+            }
+            
+        } else if item.lowercased() == Categories.Houses.rawValue {
+            // Get Data for House...
+            httpUtility.getApiData(requestUrl: url, requestType: [House].self) { result in
+                self.showHouseScreen(for: result, item: item)
+            }
+            
+        } else if item.lowercased() == Categories.Characters.rawValue {
+            //Get Data for Character...
+            httpUtility.getApiData(requestUrl: url, requestType: [Character].self) { result in
+                self.showCharacterScreen(for: result, item: item)
+            }
+            
+        }
+    }
+
     fileprivate func showBooksScreen(for data: [Book], item: String) {
         DispatchQueue.main.async {
-            let itemsView = self.storyboard?.instantiateViewController(withIdentifier: "ItemsListController") as! ItemsListController
+            let itemsView = self.getItemViewControllerObj()
             itemsView.item = item
             itemsView.booksDataModel = data
             self.activityIndicator.isHidden = true
@@ -112,7 +102,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     
     fileprivate func showHouseScreen(for data: [House], item: String) {
         DispatchQueue.main.async {
-            let itemsView = self.storyboard?.instantiateViewController(withIdentifier: "ItemsListController") as! ItemsListController
+            let itemsView = self.getItemViewControllerObj()
             itemsView.item = item
             itemsView.housesDataModel = data
             self.activityIndicator.isHidden = true
@@ -122,7 +112,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
     
     fileprivate func showCharacterScreen(for data: [Character], item: String) {
         DispatchQueue.main.async {
-            let itemsView = self.storyboard?.instantiateViewController(withIdentifier: "ItemsListController") as! ItemsListController
+            let itemsView = self.getItemViewControllerObj()
             itemsView.item = item
             itemsView.characterDataModel = data
             self.activityIndicator.isHidden = true
@@ -148,4 +138,7 @@ extension CategoriesController: UITableViewDelegate, UITableViewDataSource {
         return ""
     }
     
+    fileprivate func getItemViewControllerObj() -> ItemsListController {
+        return self.storyboard?.instantiateViewController(withIdentifier: "ItemsListController") as! ItemsListController
+    }
 }
