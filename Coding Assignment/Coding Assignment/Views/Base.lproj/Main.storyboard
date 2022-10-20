@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accenture Interactive Amsterdam - iOS Coding Test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYH-p4-pn6">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accenture Interactive Amsterdam - iOS Coding Test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="DYH-p4-pn6">
                                 <rect key="frame" x="15" y="144" width="384" height="125.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="35"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -35,7 +35,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DYH-p4-pn6" secondAttribute="trailing" constant="15" id="L0O-Nf-Jmc"/>
                             <constraint firstItem="DYH-p4-pn6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="MDS-aj-k8t"/>
                             <constraint firstItem="Y4U-gH-9Rz" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="uZ6-G9-ATY"/>
-                            <constraint firstItem="Y4U-gH-9Rz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DYH-p4-pn6" secondAttribute="bottom" constant="70" id="vHu-sj-l1t"/>
+                            <constraint firstItem="Y4U-gH-9Rz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DYH-p4-pn6" secondAttribute="bottom" constant="50" id="vHu-sj-l1t"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="A7F-3m-s5s"/>
